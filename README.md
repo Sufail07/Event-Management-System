@@ -151,9 +151,6 @@ Please open an issue first to discuss major changes.
 
 ---
 
-## 🛡 License
-
-This project is licensed under the MIT License.
 
 ---
 
