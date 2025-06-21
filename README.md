@@ -33,8 +33,8 @@ A RESTful API for managing events, attendees, time slots, and analytics. Built w
 ## 🛠️ Installation
 
 ```bash
-git clone https://github.com/your-username/event-api.git
-cd event-api
+git clone https://github.com/Sufail07/Event-Management-System.git
+cd Event-Management-System
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
