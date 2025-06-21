@@ -12,9 +12,8 @@ A RESTful API for managing events, attendees, time slots, and analytics. Built w
 - 🔁 Recurring events: none, daily, weekly, monthly
 - 🔍 Search events by title, date range, or attendee
 - 📅 Find available time slots (conflict-aware)
-- 📊 Analytics: average attendance, popular times, top attendees
+- 📊 Analytics: average attendance, popular times
 - ⚙️ Pagination, input validation, and error handling
-- 🔐 (Optional) Ready for authentication and token-based access
 - 🧪 Fully testable with Postman or Swagger
 
 ---
@@ -120,7 +119,6 @@ Access the API at:
   "date": "2025-06-24",
   "start_time": "09:00",
   "end_time": "09:30",
-  "location": "Zoom",
   "attendees": [1, 2],
   "recurrence": "weekly"
 }
