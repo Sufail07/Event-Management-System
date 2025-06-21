@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404
 from django.utils.dateparse import parse_date
 from django.db.models import Avg, Count
 from rest_framework.viewsets import ModelViewSet
@@ -10,9 +10,6 @@ from .models import *
 from datetime import datetime, timedelta, time
 
 # Create your views here.
-
-def index(request):
-    return render(request, 'index.html')
 
 class EventView(ModelViewSet):
     queryset = Event.objects.all()
