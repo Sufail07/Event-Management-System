@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 class EventSerializer(ModelSerializer):
     class Meta:
         model = Event
-        fields = '__all__'
+        fields = ['title', 'description', 'date', 'start_time', 'end_time', 'location', 'attendees', 'recurrence']
 
 class UserSerializer(ModelSerializer):
     class Meta:

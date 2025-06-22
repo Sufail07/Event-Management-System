@@ -45,7 +45,7 @@ class EventView(ModelViewSet):
         if not event.attendees.filter(id=user_id).exists():
             return Response({'error': f'User {user.username} is not an attendee of the event'}, status=status.HTTP_400_BAD_REQUEST)
         event.attendees.remove(user)
-        return Response({'message': f'User: {user.username} removed from the event: {event.title}'})
+        return Response({'message': f'User: {user.username} removed from the event: {event.title}'}, status=status.HTTP_204_NO_CONTENT)
     
     # endpoint to get available time slots in a given date
     @action(detail=False, methods=['get'], url_path='availability')
@@ -100,21 +100,30 @@ class EventView(ModelViewSet):
         title = request.query_params.get('title')
         start_date = request.query_params.get('start_date')
         end_date = request.query_params.get('end_date')
+        location = request.query_params.get('location')
         attendee_id = request.query_params.get('attendee_id')
+        
+        queryset = Event.objects.all()
 
         if title:
-            queryset = Event.objects.filter(title__icontains=title)
+            queryset = queryset.filter(title__icontains=title)
 
         if start_date and end_date:
             try:
                 start, end = parse_date(start_date), parse_date(end_date)
                 if start and end:
-                    queryset = Event.objects.filter(date__range=(start, end))
+                    queryset = queryset.filter(date__range=(start, end))
             except ValueError:
                 return Response({"error": "Invalid date format. (Expected YYYY-MM-DD)"})
             
-        if attendee_id:
-            queryset = Event.objects.filter(attendees__id=attendee_id)
+        if location and type(location) == str:
+            queryset = queryset.filter(location=location)
         
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        if attendee_id and type(attendee_id) == int:
+            queryset = queryset.filter(attendees__id=attendee_id)
+        
+        if not queryset.exists():
+            return Response({"message": "No matching events found"}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
