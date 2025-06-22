@@ -24,7 +24,7 @@ class EventView(ModelViewSet):
             return Response({'error': 'user_id is missing'}, status=status.HTTP_400_BAD_REQUEST)
         
         user = get_object_or_404(User, id=user_id)
-        overlapping = Event.objects.filter(attendees=user, start_time__lt=event.end_time, end_time__gt=event.start_time).exclude(id=event.id)
+        overlapping = Event.objects.filter(attendees=user, start_time__lt=event.end_time, end_time__gt=event.start_time, date=event.date).exclude(id=event.id)
         
         if overlapping.exists():
             return Response({'error': 'User is already booked for another event at this time'}, status=status.HTTP_400_BAD_REQUEST)
